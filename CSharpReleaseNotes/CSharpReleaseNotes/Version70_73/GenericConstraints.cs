@@ -22,18 +22,35 @@ namespace CSharpReleaseNotes.Version70_73
 
     internal static class GenericConstraints
     {
-        public static unsafe void DisplaySize<T>() where T : unmanaged
+        public static void Sample()
+        {
+            var map = EnumNamedValues<Rainbow>();
+            foreach (var pair in map)
+            {
+                Console.WriteLine($"{pair.Key}:\t{pair.Value}");
+            }
+
+            Action source = () => Console.WriteLine("source");
+            Action target = () => Console.WriteLine("target");
+            var combined = source.CombineSafe(target);
+            combined();
+
+            DisplaySize<Coordinates<int>>();
+            DisplaySize<Coordinates<double>>();
+        }
+
+        private static unsafe void DisplaySize<T>() where T : unmanaged
         {
             Console.WriteLine($"{typeof(T)} is unmanaged and its size is {sizeof(T)} bytes");
         }
 
-        public static TDelegate CombineSafe<TDelegate>(this TDelegate source, TDelegate target)
+        private static TDelegate CombineSafe<TDelegate>(this TDelegate source, TDelegate target)
             where TDelegate : Delegate
         {
             return Delegate.Combine(source, target) as TDelegate;
         }
 
-        public static Dictionary<int, string> EnumNamedValues<T>() where T : Enum
+        private static Dictionary<int, string> EnumNamedValues<T>() where T : Enum
         {
             var result = new Dictionary<int, string>();
             var values = Enum.GetValues(typeof(T));

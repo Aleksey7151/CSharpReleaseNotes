@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CSharpReleaseNotes.Version70_73;
+using CSharpReleaseNotes.Version80;
 
 namespace CSharpReleaseNotes
 {
@@ -9,48 +10,35 @@ namespace CSharpReleaseNotes
     {
         internal class Base
         {
-
         }
 
         internal class Derived : Base
         {
-            public async ValueTask<int> Method()
-            {
-                await Task.Delay(300);
-
-                return 5;
-            }
         }
 
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-        }
+            // C# 7.0 - 7.3 
+            TuplesAndDiscards.Sample();
 
-        private static void GenericConstraintSample()
-        {
-            var map = GenericConstraints.EnumNamedValues<Rainbow>();
-            foreach (var pair in map)
-            {
-                Console.WriteLine($"{pair.Key}:\t{pair.Value}");
-            }
+            GenericConstraints.Sample();
 
-            Action source = () => Console.WriteLine("source");
-            Action target = () => Console.WriteLine("target");
-            var combined = source.CombineSafe(target);
-            combined();
-
-            GenericConstraints.DisplaySize<Coordinates<int>>();
-            GenericConstraints.DisplaySize<Coordinates<double>>();
-        }
-
-        private static void TuplesSample()
-        {
-            var methodResult = Tuples.CalculateMethod(3);
-            if (methodResult.Success)
-            {
-                Console.WriteLine(methodResult.Result);
-            }
+            // C# 8.0
+            ReadonlyMembers.Sample();
+            SwitchExpressions.Sample();
+            PropertyPatterns.Sample();
+            TuplePatterns.Sample();
+            PositionalPatterns.Sample();
+            UsingDeclarations.Sample();
+            new StaticLocalFunctions().Sample1();
+            new StaticLocalFunctions().Sample2();
+            DisposableRefStructs.Sample();
+            await AsynchronousStreams.Sample();
+            await AsynchronousDisposable.Sample();
+            IndicesAndRanges.Sample();
+            NullCoalescing.Sample();
+            UnmanagedConstructedTypes.Sample();
+            StackallocInNestedExpressions.Sample();
         }
 
         private static void ReturnRefSample()

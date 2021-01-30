@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Version80\" />
     <Folder Include="Version60\" />
   </ItemGroup>
 
